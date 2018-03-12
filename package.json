@@ -1,0 +1,21 @@
+{
+    "name": "foursquare-spinner",
+    "version": "0.0.1",
+    "description": "A simple application for viewing places near you",
+    "repository": "https://github.com/stormojm/foursquare-spinner.git",
+    "author": "stormojm <stormojm@gmail.com>",
+    "license": "MIT",
+    "private": false,
+    "scripts": {
+        "dev": "webpack-dev-server --open --mode development",
+        "build": "webpack --mode production"
+    },
+    "devDependencies": {
+        "webpack": "^4.1.1",
+        "webpack-cli": "^2.0.11",
+        "webpack-dev-server": "^3.1.1"
+    },
+    "dependencies": {
+        "angular": "^1.6.9"
+    }
+}
