@@ -1,3 +1,3 @@
 import angular from 'angular';
 
-import './basic.component';
+import './place-list.component';
