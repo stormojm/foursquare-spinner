@@ -1,8 +1,5 @@
-process.env.CHROME_BIN = require('puppeteer').executablePath();
-
 module.exports = function(config) {
-    config.set({
-
+    const configuration = {
         // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: '',
 
@@ -28,16 +25,15 @@ module.exports = function(config) {
             mode: 'development',
             module: {
                 rules: [{
-                        test: /\.js$/,
-                        exclude: /node_modules/,
-                        use: {
-                            loader: 'babel-loader',
-                            options: {
-                                presets: ['babel-preset-env']
-                            }
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    use: {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['babel-preset-env']
                         }
                     }
-                ]
+                }]
             }
         },
 
@@ -63,6 +59,13 @@ module.exports = function(config) {
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
         browsers: ['ChromeHeadless'],
 
+        customLaunchers: {
+            chrome_travis_ci: {
+                base: 'Chrome',
+                flags: ['--no-sandbox']
+            }
+        },
+
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
         singleRun: false,
@@ -70,5 +73,11 @@ module.exports = function(config) {
         // Concurrency level
         // how many browser should be started simultaneous
         concurrency: Infinity
-    });
+    };
+
+    if (process.env.TRAVIS) {
+        configuration.browsers = ['chrome_travis_ci'];
+    }
+
+    config.set(configuration);
 };
