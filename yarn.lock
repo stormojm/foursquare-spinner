@@ -102,6 +102,14 @@ amqplib@^0.5.2:
     readable-stream "1.x >=1.1.9"
     safe-buffer "^5.0.1"
 
+angular-ui-bootstrap@^2.5.6:
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/angular-ui-bootstrap/-/angular-ui-bootstrap-2.5.6.tgz#23937322ec641a6fbee16498cc32452aa199e7c5"
+
+angular-ui-slider@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/angular-ui-slider/-/angular-ui-slider-0.4.0.tgz#d76c0a54648d0d18d59c87e6c8338fae74135c75"
+
 angular@^1.6.9:
   version "1.6.9"
   resolved "https://registry.yarnpkg.com/angular/-/angular-1.6.9.tgz#bc812932e18909038412d594a5990f4bb66c0619"

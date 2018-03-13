@@ -1,6 +1,13 @@
-<input></input>
-<button class="btn btn-primary" ng-click="$ctrl.search()">Search</button>
-
-<ul>
-  <place-tile ng-repeat="place in $ctrl.places" place="place"></place-tile>
-</ul>
+<div class="place-list-container">
+    <div class="place-list-header">
+        <div ng-if="$ctrl.formattedLocation"><span class="font-weight-bold">Your Location:</span>&nbsp;<span>{{$ctrl.formattedLocation}}<span></div>
+        <button class="btn btn-primary" ng-click="$ctrl.search()">Search</button>
+        <div ui-slider data-min="0" data-max="10000" ng-model="$ctrl.range"></div>
+    </div>
+    <div ng-if="$ctrl.loading">
+        <div class="fa fa-spinner fa-spin"></div>
+    </div>
+    <ul ng-if="!$ctrl.loading">
+        <place-tile ng-repeat="place in $ctrl.places" place="place"></place-tile>
+    </ul>
+</div>

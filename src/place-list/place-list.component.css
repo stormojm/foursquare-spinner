@@ -1,0 +1,11 @@
+.place-list-container .place-list-header {
+    display: flex;
+    flex-direction: row;
+}
+
+.place-list-container .place-list-header .ui-slider {
+  position: relative;
+  width: 100px;
+  top: 10px;
+  left: 10px;
+}

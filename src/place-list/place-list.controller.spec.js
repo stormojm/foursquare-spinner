@@ -35,6 +35,7 @@ describe('place-list.controller', () => {
         const placeListController = new PlaceListController(mocks.scope);
         expect(placeListController).not.toBeUndefined();
         expect(placeListController.places).toEqual([]);
+        expect(placeListController.loading).toBe(false);
     });
 
     describe('when searching for places', () => {
@@ -49,6 +50,11 @@ describe('place-list.controller', () => {
 
             placeListController = new PlaceListController(mocks.scope);
             placeListController.search();
+
+            // This should be moved into an it, and a new
+            // describe block where the evalAsync (or the venues search)
+            // is called manually instead of automatically.
+            expect(placeListController.loading).toBe(true);
         });
 
         it('should update the places on the controller', () => {
@@ -62,6 +68,10 @@ describe('place-list.controller', () => {
 
         it('should request the current position of the agent', () => {
             expect(mocks.utils.getCurrentPosition).toHaveBeenCalled();
+        });
+
+        it('should reset loading to false', () => {
+            expect(placeListController.loading).toBe(false);
         });
     });
 });

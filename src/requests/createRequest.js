@@ -14,6 +14,8 @@ export default (method, url) => {
             };
 
             let paramString = '?';
+
+            // client secret should not be exposed in a web application.
             const formattedParams = [
                 'client_id=YTZT1ZRTVMXA52INRENW43SXOYHUL1XTZAIKJBMR1I0TDAWK',
                 'client_secret=DVRI3XOQAXWIIMGTGC1RS5TJ0NAMXZQZF1PALE3DXUMQ4AUJ',
