@@ -4,10 +4,16 @@ export default class Venues {
         this.request = createRequest('GET', 'https://api.foursquare.com/v2/venues/explore');
     }
 
-    explore() {
-        return this.request({
-            near: 'Chicago,IL'
-        }).then((response) => {
+    explore(searchCriteria) {
+        let foursquareCriteria = {};
+        foursquareCriteria.radius = searchCriteria.radius;
+        if (typeof searchCriteria.location === 'object') {
+            foursquareCriteria.ll = `${searchCriteria.location.latitude},${searchCriteria.location.longitude}`;
+        } else {
+            foursquareCriteria.near = searchCriteria.location;
+        }
+
+        return this.request(foursquareCriteria).then(response => {
             return response;
         }, response => {
             return;
