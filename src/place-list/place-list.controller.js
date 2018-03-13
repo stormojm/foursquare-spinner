@@ -1,4 +1,4 @@
-import Venues from './requests/Venues';
+import Venues from '../requests/Venues';
 
 export default class PlaceListController {
     constructor($scope) {
