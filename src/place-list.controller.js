@@ -1,14 +1,17 @@
 import Venues from './requests/Venues';
 
 export default class PlaceListController {
-    constructor($http) {
+    constructor($scope) {
         this.places = [];
-        this.venues = new Venues($http);
+        this.venues = new Venues();
+        this.scope = $scope;
     }
 
     search() {
-        let result = this.venues.explore().then(data => {
-            this.places = data.response.groups[0].items;
+        this.venues.explore().then(data => {
+            this.scope.$evalAsync(() => {
+                this.places = data.response.groups[0].items;
+            });
         });
     }
-};
+}

@@ -22,10 +22,20 @@ module.exports = function(config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'src/**/*.spec.js': ['webpack']
+            'src/**/*.js': ['webpack']
         },
 
-        webpack: {},
+        webpack: {
+            mode: 'development',
+            module: {
+                rules: [{
+                        test: /\.js$/,
+                        exclude: /node_modules/,
+                        loader: "babel-loader"
+                    }
+                ]
+            }
+        },
 
         // test results reporter to use
         // possible values: 'dots', 'progress'

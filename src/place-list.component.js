@@ -6,5 +6,5 @@ angular.module('swirlApp', []);
 angular.module('swirlApp').
   component('placeList', {
     template: placeListTemplate,
-    controller: [ '$http', PlaceListController ]
+    controller: [ '$scope', PlaceListController ]
   });
