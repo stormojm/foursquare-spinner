@@ -15,7 +15,9 @@ describe('place-list.controller', () => {
             explore: jasmine.createSpy('explore').and.returnValue(new Promise((resolve, reject) => {
                 resolve({
                     response: {
-                        headerFullLocation: 'Test Location',
+                        geocode: {
+                            displayString: 'Test Location'
+                        },
                         groups: [{
                             items: [{name:'test'}]
                         }]

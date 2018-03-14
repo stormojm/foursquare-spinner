@@ -43,15 +43,21 @@ export default class PlaceListController {
             return this.venues.explore(searchCriteria);
         }).then(data => {
             this.scope.$evalAsync(() => {
-                if (!data.response) {
+                if (!data || !data.response) {
                     console.error('No data returned from venues search.');
+                    this.loading = false;
+                    this.places = [];
                     return;
                 }
 
-                this.searchText = data.response.headerFullLocation;
+                if (data.response.geocode) {
+                    this.searchText = data.response.geocode.displayString;
+                }
 
                 if (!data.response.groups || data.response.groups.length < 1) {
                     console.error('No places returned from venues search.');
+                    this.loading = false;
+                    this.places = [];
                     return;
                 }
 
@@ -60,8 +66,7 @@ export default class PlaceListController {
             });
         }).catch(() => {
             console.error('Unable to search at your location');
-        }).finally(() => {
-
-        });
+            this.loading = false;
+        })
     }
 }
