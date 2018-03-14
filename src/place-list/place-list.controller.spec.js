@@ -15,6 +15,7 @@ describe('place-list.controller', () => {
             explore: jasmine.createSpy('explore').and.returnValue(new Promise((resolve, reject) => {
                 resolve({
                     response: {
+                        headerFullLocation: 'Test Location',
                         groups: [{
                             items: [{name:'test'}]
                         }]
@@ -38,7 +39,7 @@ describe('place-list.controller', () => {
         expect(placeListController.loading).toBe(false);
     });
 
-    describe('when searching for places', () => {
+    describe('when searching for places with empty location', () => {
         let placeListController;
         beforeEach(done => {
             mocks.scope = {
@@ -72,6 +73,35 @@ describe('place-list.controller', () => {
 
         it('should reset loading to false', () => {
             expect(placeListController.loading).toBe(false);
+        });
+
+        it('should change the search text to the location', () => {
+            expect(placeListController.searchText).toBe('Test Location');
+        });
+    });
+
+    describe('when searching for places with search text', () => {
+        let placeListController;
+        beforeEach(done => {
+            mocks.scope = {
+                '$evalAsync': callback => {
+                    callback();
+                    done();
+                }
+            };
+
+            placeListController = new PlaceListController(mocks.scope);
+            placeListController.searchText = 'Test, NL';
+            placeListController.search();
+        });
+
+        it('should call the venue request', () => {
+            expect(mocks.venue.explore).toHaveBeenCalled();
+            expect(mocks.venue.explore.calls.argsFor(0)[0].location).toEqual('Test, NL');
+        });
+
+        it('should not request the current position of the agent', () => {
+            expect(mocks.utils.getCurrentPosition).not.toHaveBeenCalled();
         });
     });
 });

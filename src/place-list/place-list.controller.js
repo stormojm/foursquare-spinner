@@ -11,9 +11,30 @@ export default class PlaceListController {
         this.popoverContent = 'Test';
     }
 
+    _getLocation() {
+        return new Promise((resolve, reject) => {
+            if (this.searchText) {
+                resolve(this.searchText);
+                return;
+            }
+
+            if (this._cachedLocation) {
+                resolve(this._cachedLocation);
+                return;
+            }
+
+            getCurrentPosition().then(value => {
+                this._cachedLocation = value;
+                resolve(value);
+            }, reason => {
+                reject(reason);
+            });
+        });
+    }
+
     search() {
         this.scope.$evalAsync(() => this.loading = true);
-        getCurrentPosition().then(location => {
+        this._getLocation().then(location => {
             let searchCriteria = {
                 location,
                 radius: this.range
@@ -27,7 +48,7 @@ export default class PlaceListController {
                     return;
                 }
 
-                this.formattedLocation = data.response.headerFullLocation;
+                this.searchText = data.response.headerFullLocation;
 
                 if (!data.response.groups || data.response.groups.length < 1) {
                     console.error('No places returned from venues search.');
@@ -35,7 +56,7 @@ export default class PlaceListController {
                 }
 
                 this.places = data.response.groups[0].items;
-                this.loading = false
+                this.loading = false;
             });
         }).catch(() => {
             console.error('Unable to search at your location');

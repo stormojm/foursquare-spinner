@@ -1,7 +1,10 @@
 <div class="place-list-container">
     <nav class="navbar navbar-light bg-light sticky-top">
         <form class="form-inline">
-            <input class="form-control mr-sm-2 searchbox" type="search" placeholder="Your location or elsewhere..." ng-model="$ctrl.formattedLocation" />
+            <input class="form-control mr-sm-2 searchbox"
+                   type="search"
+                   placeholder="Your location or elsewhere..."
+                   ng-model="$ctrl.searchText" />
             <button class="btn btn-primary mr-sm-2" ng-click="$ctrl.search()">Search</button>
             <div class="mr-sm-2 range-slider">
                 <label><small>Within {{$ctrl.range}} meters</small></label>
