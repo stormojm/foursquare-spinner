@@ -7,6 +7,8 @@ export default class Venues {
     explore(searchCriteria) {
         let foursquareCriteria = {};
         foursquareCriteria.radius = searchCriteria.radius;
+        foursquareCriteria.limit = searchCriteria.limit;
+        foursquareCriteria.offset = searchCriteria.offset;
         if (typeof searchCriteria.location === 'object') {
             foursquareCriteria.ll = `${searchCriteria.location.latitude},${searchCriteria.location.longitude}`;
         } else {

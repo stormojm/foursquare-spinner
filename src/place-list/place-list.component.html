@@ -8,7 +8,7 @@
             <button class="btn btn-primary mr-sm-2" ng-click="$ctrl.search()">Search</button>
             <div class="mr-sm-2 range-slider">
                 <label><small>Within {{$ctrl.range}} meters</small></label>
-                <div ui-slider data-min="0" data-max="10000" ng-model="$ctrl.range"></div>
+                <div ui-slider data-min="0" data-max="1000" ng-model="$ctrl.range"></div>
             </div>
         </form>
     </nav>
@@ -17,10 +17,17 @@
             <div class="fa fa-spinner fa-spin"></div>
         </div>
         <div ng-if="!$ctrl.loading && $ctrl.places.length <= 0" class="central-container">
-            <h3>No results currently... Refine your search!</h3>
+            <h3>No results currently... Hit Search!</h3>
         </div>
-        <ul ng-if="!$ctrl.loading">
-            <place-tile ng-repeat="place in $ctrl.places" place="place"></place-tile>
-        </ul>
+        <div ng-if="!$ctrl.loading && $ctrl.places.length > 0">
+            <ul>
+                <place-tile ng-repeat="place in $ctrl.places" place="place"></place-tile>
+            </ul>
+            <button class="btn btn-outline-success"
+                    ng-click="$ctrl.getMoreResults()"
+                    ng-if="$ctrl.showGetMoreResults">
+                See more results
+            </button>
+        </div>
     </div>
 </div>

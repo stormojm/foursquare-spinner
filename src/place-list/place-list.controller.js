@@ -1,6 +1,8 @@
 import Venues from '../requests/Venues';
 import { getCurrentPosition } from '../utils';
 
+const pageLimit = 30;
+
 export default class PlaceListController {
     constructor($scope) {
         this.places = [];
@@ -8,7 +10,8 @@ export default class PlaceListController {
         this.scope = $scope;
         this.range = 250;
         this.loading = false;
-        this.popoverContent = 'Test';
+        this.showGetMoreResults = true;
+        this._currentOffset = 0;
     }
 
     _getLocation() {
@@ -32,12 +35,17 @@ export default class PlaceListController {
         });
     }
 
-    search() {
-        this.scope.$evalAsync(() => this.loading = true);
+    getMoreResults() {
+        this._searchImpl();
+    }
+
+    _searchImpl() {
         this._getLocation().then(location => {
             let searchCriteria = {
                 location,
-                radius: this.range
+                radius: this.range,
+                offset: this._currentOffset,
+                limit: pageLimit
             };
 
             return this.venues.explore(searchCriteria);
@@ -61,12 +69,27 @@ export default class PlaceListController {
                     return;
                 }
 
-                this.places = data.response.groups[0].items;
+                let requestPlaceResults = data.response.groups[0].items;
+                this.places = this.places.concat(requestPlaceResults);
+                if (requestPlaceResults.length < pageLimit) {
+                    this.showGetMoreResults = false;
+                }
+                this._currentOffset += pageLimit;
+
                 this.loading = false;
             });
         }).catch(() => {
             console.error('Unable to search at your location');
             this.loading = false;
-        })
+        });
+    }
+
+    search() {
+        // Reset our search and pagin
+        this._currentOffset = 0;
+        this.showGetMoreResults = true;
+        this.places = [];
+        this.loading = true;
+        this._searchImpl();
     }
 }
